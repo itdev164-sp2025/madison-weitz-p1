@@ -1,13 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-function EventForm({ onSubmit }) {
+function EventForm({ onSubmit, initialData = {}, isEditing = false }) {
   const [title, setTitle] = useState("");
   const [date, setDate] = useState("");
 
+  // Synchronize state with the new initialData whenever it changes
+  useEffect(() => {
+    setTitle(initialData.title || "");
+    setDate(initialData.date || "");
+  }, [initialData]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit({ title, date }); // Sends event data to the parent component
-    setTitle(""); // Clear form fields after submission
+    onSubmit({ title, date });
+    setTitle("");
     setDate("");
   };
 
@@ -24,7 +30,7 @@ function EventForm({ onSubmit }) {
         value={date}
         onChange={(e) => setDate(e.target.value)}
       />
-      <button type="submit">Add Event</button>
+      <button type="submit">{isEditing ? "Update Event" : "Add Event"}</button>
     </form>
   );
 }

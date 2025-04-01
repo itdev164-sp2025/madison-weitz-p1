@@ -1,7 +1,7 @@
 import React from "react";
-import { EventContainer, EventItem } from "./styles"; // Styled components
+import { EventContainer, EventItem } from "./styles"; // Styled components for styling
 
-function EventList({ events }) {
+function EventList({ events, onDelete, onEdit }) {
   return (
     <EventContainer>
       <h2>Event List</h2>
@@ -10,6 +10,8 @@ function EventList({ events }) {
           <EventItem key={index}>
             <h3>{event.title}</h3>
             <p>{event.date}</p>
+            <button onClick={() => onEdit(index)}>Edit</button> {/* Edit button */}
+            <button onClick={() => onDelete(index)}>Delete</button> {/* Delete button */}
           </EventItem>
         ))
       ) : (
@@ -20,4 +22,3 @@ function EventList({ events }) {
 }
 
 export default EventList;
-
