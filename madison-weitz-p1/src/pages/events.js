@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { ThemeProvider } from "styled-components"; // Import ThemeProvider
+import { theme } from "../styles/theme"; // Import your theme file
 import EventForm from "../components/EventForm";
 import EventList from "../components/EventList";
 import EventCalendar from "../components/EventCalendar"; // Import the calendar component
@@ -31,21 +33,23 @@ export default function EventsPage() {
   };
 
   return (
-    <main>
-      <h1>Your Events</h1>
+    <ThemeProvider theme={theme}> {/* Wrap entire app in ThemeProvider */}
+      <main>
+        <h1>Your Events</h1>
 
-      {/* Event Form for adding/editing events */}
-      <EventForm
-        onSubmit={addEvent}
-        initialData={currentEditIndex !== null ? events[currentEditIndex] : {}}
-        isEditing={currentEditIndex !== null}
-      />
+        {/* Event Form for adding/editing events */}
+        <EventForm
+          onSubmit={addEvent}
+          initialData={currentEditIndex !== null ? events[currentEditIndex] : {}}
+          isEditing={currentEditIndex !== null}
+        />
 
-      {/* Event Calendar displaying events by date */}
-      <EventCalendar events={events} selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
+        {/* Event Calendar displaying events by date */}
+        <EventCalendar events={events} selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
 
-      {/* List of all events with edit and delete options */}
-      <EventList events={events} onDelete={deleteEvent} onEdit={editEvent} />
-    </main>
+        {/* List of all events with edit and delete options */}
+        <EventList events={events} onDelete={deleteEvent} onEdit={editEvent} />
+      </main>
+    </ThemeProvider>
   );
 }
